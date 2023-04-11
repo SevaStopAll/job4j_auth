@@ -1,2 +1,41 @@
-Here is a project to meet REST architecture and its feature, so it is a student project.
-In this project the main principles of REST will be shown with Spring, Spring Data, Lombok,  Postgres.   
+# Проект "RestFul API."
+
+## Описание проекта.
+
+Данный проект создан для освоениы 6 принципов RESTful архитектуры клиент-серверного приложения.
+
+1. Универсальный интерфейс взаимодействия. (Uniform Interface)
+
+2. Запросы без состояния. (Stateless)
+
+3. Поддержка кеширования. (Cacheable)
+
+4. Клиент-серверная ориентация.
+
+5. Поддержка слоев (Layered System)
+
+6. Возможность выполнять код на стороне клиента (Code on Demand)
+
+## Стек.
+
+- **Java 17**
+- **Spring Boot 2.7.10**
+- **PostgreSQL 14**
+- **lombok**
+
+
+## Требования.
+
+- **Java 17**
+- **Maven 3.8**
+- **PostgresSQL 14**
+
+## Запуск проекта.
+
+Запуск производится через PersonApplication /src/main/java/ru.job4.persons
+
+## Взаимодействие с приложением.
+
+
+
+## Контакты.
