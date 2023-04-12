@@ -3,6 +3,7 @@ package ru.job4j.auth.contoller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.auth.domain.Person;
 import ru.job4j.auth.service.SimplePersonService;
 
@@ -26,13 +27,19 @@ public class PersonController {
     public ResponseEntity<Person> findById(@PathVariable int id) {
         var person = this.persons.findById(id);
         return new ResponseEntity<>(
-                person.orElse(new Person()),
-                person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
+                person.orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "This person is not found. Please, check id one more time."
+                )),
+                HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity<Person> create(@RequestBody Person person) {
+        var login = person.getLogin();
+        var password = person.getPassword();
+        if (login == null || password == null) {
+            throw new NullPointerException("Login and password mustn't be empty");
+        }
         return new ResponseEntity<>(
                 this.persons.save(person),
                 HttpStatus.CREATED
@@ -41,6 +48,11 @@ public class PersonController {
 
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Person person) {
+        var login = person.getLogin();
+        var password = person.getPassword();
+        if (login == null || password == null) {
+            throw new NullPointerException("Login and password mustn't be empty");
+        }
         if (persons.update(person)) {
         return ResponseEntity.ok().build();
         }
