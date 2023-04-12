@@ -1,9 +1,9 @@
-package ru.job4j.persons.service;
+package ru.job4j.auth.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.job4j.persons.domain.Person;
-import ru.job4j.persons.repository.PersonRepository;
+import ru.job4j.auth.domain.Person;
+import ru.job4j.auth.repository.PersonRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

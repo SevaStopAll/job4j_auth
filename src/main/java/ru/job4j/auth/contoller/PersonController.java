@@ -1,11 +1,10 @@
-package ru.job4j.persons.contoller;
+package ru.job4j.auth.contoller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.persons.domain.Person;
-import ru.job4j.persons.repository.PersonRepository;
-import ru.job4j.persons.service.SimplePersonService;
+import ru.job4j.auth.domain.Person;
+import ru.job4j.auth.service.SimplePersonService;
 
 import java.util.List;
 
