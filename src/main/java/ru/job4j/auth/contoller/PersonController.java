@@ -8,6 +8,7 @@ import ru.job4j.auth.domain.Person;
 import ru.job4j.auth.domain.PersonDto;
 import ru.job4j.auth.service.SimplePersonService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,7 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Person> create(@RequestBody Person person) {
+    public ResponseEntity<Person> create(@Valid @RequestBody Person person) {
         var login = person.getLogin();
         var password = person.getPassword();
         if (login == null || password == null) {
@@ -48,7 +49,7 @@ public class PersonController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<Void> update(@RequestBody Person person) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Person person) {
         var login = person.getLogin();
         var password = person.getPassword();
         if (login == null || password == null) {

@@ -14,6 +14,7 @@ import ru.job4j.auth.service.SimplePersonService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody Person person) {
+    public void signUp(@Valid @RequestBody Person person) {
         var login = person.getLogin();
         var password = person.getPassword();
         if (login == null || password == null) {
