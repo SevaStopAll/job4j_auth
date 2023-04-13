@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.auth.domain.Person;
-import ru.job4j.auth.repository.PersonRepository;
+import ru.job4j.auth.domain.PersonDto;
+import ru.job4j.auth.service.SimplePersonService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,14 +22,14 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private PersonRepository users;
+    private SimplePersonService users;
     private BCryptPasswordEncoder encoder;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class.getSimpleName());
 
     private final ObjectMapper objectMapper;
 
-    public UserController(PersonRepository users,
+    public UserController(SimplePersonService users,
                           BCryptPasswordEncoder encoder,
                           ObjectMapper objectMapper) {
         this.users = users;
@@ -51,6 +54,15 @@ public class UserController {
     @GetMapping("/all")
     public List<Person> findAll() {
         return users.findAll();
+    }
+
+    @PatchMapping("/patchDTO/{id}")
+    public ResponseEntity<Person> patchDTO(@RequestBody PersonDto personDTO, @PathVariable int id) {
+        var person = users.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        person.setPassword(personDTO.getPassword());
+        var rsl = users.update(person);
+        return new ResponseEntity<>(person, rsl ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = { IllegalArgumentException.class })
